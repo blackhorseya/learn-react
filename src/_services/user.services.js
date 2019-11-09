@@ -1,8 +1,9 @@
-import { appHeader } from '../_helpers';
+import { appHeader, authHeader } from '../_helpers';
 
 export const userService = {
     login,
     logout,
+    getById,
 }
 
 function login(username, password) {
@@ -26,9 +27,19 @@ function logout() {
     localStorage.removeItem('user');
 }
 
+function getById(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`http://localhost:5000/api/v1/user/${id}`, requestOptions).then(handleResponse);
+}
+
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
+        console.log(data);
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api

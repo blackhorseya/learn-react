@@ -27,6 +27,12 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+        if (localStorage.getItem('user')) {
+            this.props.history.push('/');
+        }
+    }
+
     handleChange(e) {
         const { name, value } = e.target;
         this.setState({ [name]: value });
