@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import './App.css';
 import { history } from '../../_helpers';
-import { Dashboard, Login, Keytool, Banner, Menu } from '..';
+import { Dashboard, Login, Keytool, Banner, Menu, PrivateRoute } from '..';
 
 const Main = styled.main`
     position: relative;
@@ -40,16 +40,16 @@ class App extends React.Component {
                 <div
                   style={{
                     position: 'relative',
-                    height: 'calc(100vh - 50px)'
+                    height: 'calc(100vh - 61px)'
                   }}>
                   <Menu location={location} history={history} />
-                <Main>
-                  <Switch>
-                    <Route path="/dashboard" exact component={Dashboard} />
-                    <Route path="/keytool" component={Keytool} />
-                    <Redirect from="*" to="/dashboard" />
-                  </Switch>
-                </Main>
+                  <Main>
+                    <Switch>
+                      <PrivateRoute path="/dashboard" exact component={Dashboard} />
+                      <PrivateRoute path="/keytool" component={Keytool} />
+                      <Redirect from="*" to="/dashboard" />
+                    </Switch>
+                  </Main>
                 </div>
               </React.Fragment>
             )} />

@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import FormControl, { Input } from '@trendmicro/react-form-control';
 import { Button } from '@trendmicro/react-buttons';
 import styled from 'styled-components';
 
 import '@trendmicro/react-form-control/dist/react-form-control.css';
 import '@trendmicro/react-buttons/dist/react-buttons.css';
+
+import { userActions } from '../../_actions';
 
 const FormGroup = styled.div`
     margin-bottom: 12px;
@@ -68,4 +71,15 @@ class Login extends React.Component {
     }
 }
 
-export { Login };
+function mapStateToProps(state) {
+    const { loggingIn } = state.authentication;
+    return { loggingIn };
+}
+
+const actionCreators = {
+    login: userActions.login,
+    // logout: userActions.logout
+};
+
+const connectedLogin = connect(mapStateToProps, actionCreators)(Login);
+export { connectedLogin as Login };
