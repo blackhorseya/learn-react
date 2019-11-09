@@ -1,10 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 
 import './App.css';
 import { history } from '../../_helpers';
-import { Dashboard, Login, Keytool, Banner } from '..';
+import { Dashboard, Login, Keytool, Banner, Menu } from '..';
+
+const Main = styled.main`
+    position: relative;
+    overflow: hidden;
+    transition: all .15s;
+    padding: 0 20px;
+    margin-left: ${props => (props.expanded ? 240 : 64)}px;
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -20,13 +29,33 @@ class App extends React.Component {
     const title = "PLS Self Service"
 
     return (
-      <div name="container" className="container">
+      <div>
         <Banner title={title} />
 
-        <Route path="/login" component={Login} />
-        <Route path="/" exact component={Dashboard} />
-        <Route path="/keytool" component={Keytool} />
-        <Redirect from="*" to="/" />
+        <Router history={history}>
+          <Switch>
+            <Route path="/login" exact component={Login} />
+            <Route path="/" render={({ location, history }) => (
+              <React.Fragment>
+                <div
+                  style={{
+                    position: 'relative',
+                    height: 'calc(100vh - 50px)'
+                  }}>
+                  <Menu location={location} history={history} />
+                <Main>
+                  <Switch>
+                    <Route path="/dashboard" exact component={Dashboard} />
+                    <Route path="/keytool" component={Keytool} />
+                    <Redirect from="*" to="/dashboard" />
+                  </Switch>
+                </Main>
+                </div>
+              </React.Fragment>
+            )} />
+            <Redirect from="*" to="/" />
+          </Switch>
+        </Router>
       </div>
     );
   }
