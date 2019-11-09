@@ -1,0 +1,32 @@
+.site-header {
+    position: relative;
+    padding: 0 20px;
+    height: 64px;
+    margin-bottom: 0;
+    background-color: #eeeeee;
+  }
+  .site-header a:link,
+  .site-header a:hover,
+  .site-header a:active,
+  .site-header a:visited,
+  .site-header a:focus {
+    color: #222;
+    text-decoration: none;
+  }
+  .site-header .banner {
+    width: 32px;
+    height: 32px;
+    margin: 16px 0;
+    margin-right: 10px;
+    background: url("../../logo.svg") center left no-repeat;
+    float: left;
+  }
+  .site-header .title {
+    padding: 16px 0;
+    font-family: "Interstate-Light", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 26px;
+    font-weight: 200;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+  

@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import './App.css';
 import { history } from '../../_helpers';
-import { Dashboard, Login, Keytool } from '..';
+import { Dashboard, Login, Keytool, Banner } from '..';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,13 +17,14 @@ class App extends React.Component {
   }
 
   render() {
+    const title = "PLS Self Service"
+
     return (
       <div name="container" className="container">
-        <header>
-          <h1>PLS Self Service</h1>
-        </header>
-        <Route path="/" exact component={Dashboard} />
+        <Banner title={title} />
+
         <Route path="/login" component={Login} />
+        <Route path="/" exact component={Dashboard} />
         <Route path="/keytool" component={Keytool} />
         <Redirect from="*" to="/" />
       </div>
