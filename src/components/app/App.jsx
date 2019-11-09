@@ -35,12 +35,12 @@ class App extends React.Component {
         <Router history={history}>
           <Switch>
             <Route path="/login" exact component={Login} />
-            <Route path="/" render={({ location, history }) => (
+            <Route render={({ location, history }) => (
               <React.Fragment>
                 <div
                   style={{
                     position: 'relative',
-                    height: 'calc(100vh - 61px)'
+                    height: 'calc(100vh - 65px)'
                   }}>
                   <Menu location={location} history={history} />
                   <Main>
@@ -53,7 +53,6 @@ class App extends React.Component {
                 </div>
               </React.Fragment>
             )} />
-            <Redirect from="*" to="/" />
           </Switch>
         </Router>
       </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FormControl, { Input } from '@trendmicro/react-form-control';
-import { Button } from '@trendmicro/react-buttons';
 import styled from 'styled-components';
 
+import { Button } from '../buttons';
+
 import '@trendmicro/react-form-control/dist/react-form-control.css';
-import '@trendmicro/react-buttons/dist/react-buttons.css';
 
 import { userActions } from '../../_actions';
 
@@ -28,7 +28,7 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        if (localStorage.getItem('user')) {
+        if (this.props.loggedIn) {
             this.props.history.push('/');
         }
     }
@@ -78,8 +78,8 @@ class Login extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
-    return { loggingIn };
+    const { loggedIn } = state.authentication;
+    return { loggedIn };
 }
 
 const actionCreators = {

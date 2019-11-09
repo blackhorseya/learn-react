@@ -4,6 +4,7 @@ import { history } from '../_helpers';
 
 export const userActions = {
     login,
+    logout,
     getById,
 }
 
@@ -29,11 +30,16 @@ function login(username, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
+function logout() {
+    userService.logout();
+    return { type: userConstants.LOGOUT };
+}
+
 function getById(id) {
     return dispatch => {
         dispatch(request());
 
-        userService.getById()
+        userService.getById(id)
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))
