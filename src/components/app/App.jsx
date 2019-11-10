@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import './App.css';
 import { history } from '../../_helpers';
-import { Dashboard, Login, Keytool, Banner, Menu, PrivateRoute } from '..';
+import { Dashboard, Login, Keytool, Banner, Menu, PrivateRoute, UserManagement } from '..';
 
 const Main = styled.main`
     position: relative;
@@ -47,6 +47,7 @@ class App extends React.Component {
                     <Switch>
                       <PrivateRoute path="/dashboard" exact component={Dashboard} />
                       <PrivateRoute path="/keytool" component={Keytool} />
+                      <PrivateRoute path="/management" component={UserManagement} />
                       <Redirect from="*" to="/dashboard" />
                     </Switch>
                   </Main>

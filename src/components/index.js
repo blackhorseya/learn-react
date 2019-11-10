@@ -5,3 +5,4 @@ export * from './keytool';
 export * from './banner';
 export * from './menu';
 export * from './privateRoute';
+export * from './userManagement';

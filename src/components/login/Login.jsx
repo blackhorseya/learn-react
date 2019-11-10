@@ -76,7 +76,6 @@ function mapStateToProps(state) {
 
 const actionCreators = {
     login: userActions.login,
-    // logout: userActions.logout
 };
 
 const connectedLogin = connect(mapStateToProps, actionCreators)(Login);

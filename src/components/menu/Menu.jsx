@@ -50,6 +50,14 @@ class Menu extends React.Component {
                             KeyTool
                             </NavText>
                     </NavItem>
+                    <NavItem eventKey="management">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-users" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            User Management
+                            </NavText>
+                    </NavItem>
                 </SideNav.Nav>
             </SideNav>
         )
