@@ -47,7 +47,7 @@ class App extends React.Component {
                     <Switch>
                       <PrivateRoute path="/dashboard" exact component={Dashboard} />
                       <PrivateRoute path="/keytool" component={Keytool} />
-                      <PrivateRoute path="/management" component={UserManagement} />
+                      <PrivateRoute path="/management" roles={['admin']} component={UserManagement} />
                       <Redirect from="*" to="/dashboard" />
                     </Switch>
                   </Main>
