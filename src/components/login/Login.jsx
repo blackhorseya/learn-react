@@ -1,17 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import FormControl, { Input } from '@trendmicro/react-form-control';
-import styled from 'styled-components';
-
-import { Button } from '../buttons';
-
-import '@trendmicro/react-form-control/dist/react-form-control.css';
+import { FormControl, FormGroup, Input, Button } from '../_shared';
 
 import { userActions } from '../../_actions';
-
-const FormGroup = styled.div`
-    margin-bottom: 12px;
-`;
 
 class Login extends React.Component {
     constructor(props) {
@@ -47,6 +38,7 @@ class Login extends React.Component {
             this.props.login(username, password);
         }
     }
+    
     render() {
         const { username, password, submitted } = this.state;
 

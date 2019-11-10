@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import Anchor from '@trendmicro/react-anchor';
-import { Button } from '../buttons';
+import { Button, Anchor } from '../_shared';
 import { userActions } from '../../_actions';
 import { history } from '../../_helpers';
 import './Banner.css';
