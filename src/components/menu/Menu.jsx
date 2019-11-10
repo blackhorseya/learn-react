@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
@@ -28,7 +29,8 @@ class Menu extends React.Component {
     };
 
     render() {
-        const { selected, expanded } = this.state;
+        const { selected } = this.state;
+        const { user } = this.props;
 
         return (
             <SideNav onSelect={this.onSelect} onToggle={this.onToggle}>
@@ -50,18 +52,31 @@ class Menu extends React.Component {
                             KeyTool
                             </NavText>
                     </NavItem>
-                    <NavItem eventKey="management">
-                        <NavIcon>
-                            <i className="fa fa-fw fa-users" style={{ fontSize: '1.75em' }} />
-                        </NavIcon>
-                        <NavText>
-                            User Management
+                    { user && user.roles.includes('admin') &&
+                        <NavItem eventKey="management">
+                            <NavIcon>
+                                <i className="fa fa-fw fa-users" style={{ fontSize: '1.75em' }} />
+                            </NavIcon>
+                            <NavText>
+                                User Management
                             </NavText>
-                    </NavItem>
+                        </NavItem>
+                    }
                 </SideNav.Nav>
             </SideNav>
         )
     }
 }
 
-export { Menu };
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return { user }
+}
+
+const actionCreators = {
+
+}
+
+const connectedMenu = connect(mapStateToProps, actionCreators)(Menu);
+export { connectedMenu as Menu };

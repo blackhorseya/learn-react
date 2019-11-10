@@ -4,7 +4,7 @@ import { userActions } from '../../_actions';
 
 class Dashboard extends React.Component {
     render() {
-        const { user, users } = this.props;
+        const { user } = this.props;
 
         return (
             <div>
@@ -25,9 +25,8 @@ class Dashboard extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { users, authentication } = state;
-    const { user } = authentication;
-    return { user, users };
+    const { user } = state.authentication;
+    return { user };
 }
 
 const actionCreators = {

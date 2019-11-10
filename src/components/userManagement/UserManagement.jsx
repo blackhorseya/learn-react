@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { userActions } from '../../_actions';
-import { Table, TablePagination, Button, Anchor } from '../_shared';
+import { Table, Anchor } from '../_shared';
 
 class UserManagement extends React.Component {
     constructor(props) {
