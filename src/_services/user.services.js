@@ -4,6 +4,7 @@ export const userService = {
     login,
     logout,
     getById,
+    getAll,
 }
 
 function login(username, password) {
@@ -36,10 +37,18 @@ function getById(id) {
     return fetch(`http://localhost:5000/api/v1/user/${id}`, requestOptions).then(handleResponse);
 }
 
+function getAll() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    }
+
+    return fetch(`http://localhost:5000/api/v1/user`, requestOptions).then(handleResponse);
+}
+
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
-        console.log(data);
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api

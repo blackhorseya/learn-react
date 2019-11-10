@@ -6,6 +6,7 @@ export const userActions = {
     login,
     logout,
     getById,
+    getAll,
 }
 
 function login(username, password) {
@@ -36,10 +37,26 @@ function logout() {
 }
 
 function getById(id) {
+    // return dispatch => {
+    //     dispatch(request());
+
+    //     userService.getById(id)
+    //         .then(
+    //             users => dispatch(success(users)),
+    //             error => dispatch(failure(error.toString()))
+    //         );
+    // };
+
+    // function request() { return { type: userConstants.GETALL_REQUEST } }
+    // function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
+    // function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function getAll() {
     return dispatch => {
         dispatch(request());
 
-        userService.getById(id)
+        userService.getAll()
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))
