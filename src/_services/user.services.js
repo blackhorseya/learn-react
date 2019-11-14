@@ -14,18 +14,18 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     }
 
-    return fetch(`http://localhost:5000/api/v1/user/authenticate`, requestOptions)
+    return fetch(`http://localhost:8080/api/v1/user/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('user', JSON.stringify(user));
 
             return user;
         });
 }
 
 function logout() {
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
 }
 
 function getById(id) {
@@ -34,16 +34,16 @@ function getById(id) {
         headers: authHeader(),
     };
 
-    return fetch(`http://localhost:5000/api/v1/user/${id}`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:8080/api/v1/user/${id}`, requestOptions).then(handleResponse);
 }
 
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader(),
+        headers: { ...authHeader(), ...appHeader() }
     }
 
-    return fetch(`http://localhost:5000/api/v1/user`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:8080/api/v1/user`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
