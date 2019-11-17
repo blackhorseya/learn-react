@@ -9,8 +9,8 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <h1 className="text-primary">Dashboard</h1>
-                <h2>Hi {user.name}!</h2>
-                {user.roles &&
+                <h2>Hi {user && user.name}!</h2>
+                {user && user.roles &&
                     <ul>
                         {user.roles.map((role, index) =>
                             <li key={index}>

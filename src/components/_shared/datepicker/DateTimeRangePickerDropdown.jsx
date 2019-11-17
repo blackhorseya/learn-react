@@ -2,7 +2,7 @@ import _isInteger from 'lodash/isInteger';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Anchor, Button, Dropdown, MenuItem, DateTimeRangePicker } from '..'
+import { Button, Dropdown, MenuItem, DateTimeRangePicker } from '..'
 
 const normalizeDateString = (dateString) => {
     let m = moment(dateString);

@@ -1,4 +1,5 @@
-import { appHeader, authHeader } from '../_helpers';
+import { appHeader, authHeader, verifyToken } from '../_helpers';
+import { removeToken, setToken } from "../_helpers";
 
 export const userService = {
     login,
@@ -16,16 +17,17 @@ function login(username, password) {
 
     return fetch(`http://localhost:8080/api/v1/user/authenticate`, requestOptions)
         .then(handleResponse)
-        .then(user => {
+        .then(res => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            sessionStorage.setItem('user', JSON.stringify(user));
+            const result = verifyToken(res.token)
 
-            return user;
+            setToken(res.token);
+            return result;
         });
 }
 
 function logout() {
-    sessionStorage.removeItem('user');
+    removeToken();
 }
 
 function getById(id) {
@@ -50,7 +52,7 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            if (response.status === 401) {
+            if (response.status === 401 || response.status === 403) {
                 // auto logout if 401 response returned from api
                 logout();
                 // location.reload(true);

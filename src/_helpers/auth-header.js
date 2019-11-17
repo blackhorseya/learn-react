@@ -1,8 +1,10 @@
-export function authHeader() {
-    let user = JSON.parse(sessionStorage.getItem('user'));
+import { getToken } from '.';
 
-    if (user && user.token) {
-        return { 'Authorization': 'Bearer ' + user.token };
+export function authHeader() {
+    let token = getToken();
+
+    if (token) {
+        return { 'Authorization': 'Bearer ' + token };
     } else {
         return {};
     }

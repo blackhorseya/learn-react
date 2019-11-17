@@ -1,15 +1,17 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { getToken } from "../../_helpers";
 
 export const PrivateRoute = ({ component: Component, roles, ...rest }) => (
     <Route {...rest} render={props => {
-        let user = JSON.parse(sessionStorage.getItem('user'));
+        let token = getToken();
 
         var containRoles = function(ele) {
-            return user.roles.includes(ele);
+            return true;
+            // return user.roles.includes(ele);
         }
 
-        if (!user){
+        if (!token){
             return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
         }
 

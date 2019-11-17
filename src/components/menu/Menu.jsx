@@ -52,7 +52,7 @@ class Menu extends React.Component {
                             KeyTool
                             </NavText>
                     </NavItem>
-                    { user && user.roles.includes('admin') &&
+                    {user && user.role.includes('admin') &&
                         <NavItem eventKey="management">
                             <NavIcon>
                                 <i className="fa fa-fw fa-users" style={{ fontSize: '1.75em' }} />
