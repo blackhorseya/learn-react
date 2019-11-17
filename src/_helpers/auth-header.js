@@ -1,7 +1,7 @@
-import { getToken } from '.';
+import { tokenHelper } from '.';
 
 export function authHeader() {
-    let token = getToken();
+    let token = tokenHelper.getToken();
 
     if (token) {
         return { 'Authorization': 'Bearer ' + token };

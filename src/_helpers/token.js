@@ -1,18 +1,25 @@
 import Cookies from 'js-cookie';
 import jwt from "jsonwebtoken";
 
-export function getToken() {
+export const tokenHelper = {
+    getToken,
+    setToken,
+    removeToken,
+    verifyToken,
+}
+
+function getToken() {
     return Cookies.get('__session');
 }
 
-export function setToken(token) {
+function setToken(token) {
     Cookies.set('__session', token);
 }
 
-export function removeToken() {
+function removeToken() {
     Cookies.remove('__session');
 }
 
-export function verifyToken(token) {
+function verifyToken(token) {
     return jwt.verify(token, '1234567890abcdef');
 }

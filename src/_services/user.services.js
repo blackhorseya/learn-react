@@ -1,5 +1,4 @@
-import { appHeader, authHeader, verifyToken } from '../_helpers';
-import { removeToken, setToken } from "../_helpers";
+import { appHeader, authHeader, tokenHelper } from '../_helpers';
 
 export const userService = {
     login,
@@ -19,15 +18,15 @@ function login(username, password) {
         .then(handleResponse)
         .then(res => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            const result = verifyToken(res.token)
+            const result = tokenHelper.verifyToken(res.token)
 
-            setToken(res.token);
+            tokenHelper.setToken(res.token);
             return result;
         });
 }
 
 function logout() {
-    removeToken();
+    tokenHelper.removeToken();
 }
 
 function getById(id) {

@@ -6,17 +6,34 @@ class Dashboard extends React.Component {
     render() {
         const { user } = this.props;
 
+        let roleTable = null;
+        if (!Array.isArray(user.role)) {
+            roleTable = (
+                <li key='1'>
+                    {user.role}
+                </li>
+            );
+        } else {
+            roleTable = (
+                user.role.map((role, index) =>
+                    <li key={index}>
+                        {role}
+                    </li>
+                )
+            )
+        }
+
         return (
             <div>
                 <h1 className="text-primary">Dashboard</h1>
-                <h2>Hi {user && user.name}!</h2>
-                {user && user.roles &&
+                {
+                    user &&
+                    <h2>Hi {user.unique_name}!</h2>
+                }
+                {
+                    user && user.role &&
                     <ul>
-                        {user.roles.map((role, index) =>
-                            <li key={index}>
-                                {role}
-                            </li>
-                        )}
+                        {roleTable}
                     </ul>
                 }
             </div>
