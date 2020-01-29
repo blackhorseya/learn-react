@@ -3,11 +3,8 @@
 pipeline {
     environment {
         PATH = "/root/.dotnet/tools:$PATH"
-        APP_NAME = 'learn-dotnet'
-        VERSION = "1.0.0.${BUILD_ID}"
         KUBE_NS = "default"
         DOCKERHUB = credentials('docker-hub-credential')
-        IMAGE_NAME = "${DOCKERHUB_USR}/${APP_NAME}"
         SONARQUBE_TOKEN = credentials('sonarqube-token')
         SONARQUBE_HOST_URL = "https://sonar.blackhorseya.space"
         KUBE_CONFIG_FILE = credentials('kube-config')
@@ -54,6 +51,7 @@ spec:
                                 script: 'yarn -s get-version',
                                 returnStdout: true
                         ).trim() + ".${BUILD_ID}"
+                        IMAGE_NAME = "${DOCKERHUB_USR}/${APP_NAME}"
                     }
                 }
                 echo """
@@ -87,24 +85,24 @@ Application: ${APP_NAME}:${VERSION}
             }
         }
 
-     stage('Build and push docker image') {
-         steps {
-             container('docker') {
-                 echo """
- IMAGE_NAME: ${IMAGE_NAME}
- """
+        stage('Build and push docker image') {
+            steps {
+                container('docker') {
+                    echo """
+IMAGE_NAME: ${IMAGE_NAME}
+"""
 
-                 sh "docker build -t ${IMAGE_NAME}:latest -f Dockerfile --network host ."
-                 sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"
-                 sh """
+                    sh "docker build -t ${IMAGE_NAME}:latest -f Dockerfile --network host ."
+                    sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"
+                    sh """
                  docker push ${IMAGE_NAME}:latest && \
                  docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${VERSION} && \
                  docker push ${IMAGE_NAME}:${VERSION}
                  """
-                 sh "docker images --filter=reference='${IMAGE_NAME}:*'"
-             }
-         }
-     }
+                    sh "docker images --filter=reference='${IMAGE_NAME}:*'"
+                }
+            }
+        }
 
 //     stage('Deploy') {
 //       steps {
