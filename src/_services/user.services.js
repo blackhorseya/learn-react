@@ -1,24 +1,24 @@
-import { appHeader, authHeader, tokenHelper } from '../_helpers';
+import {appHeader, authHeader, tokenHelper} from '../_helpers';
 
 export const userService = {
     login,
     logout,
     getById,
     getAll,
-}
+};
 
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { ...appHeader() },
-        body: JSON.stringify({ username, password })
-    }
+        headers: {...appHeader()},
+        body: JSON.stringify({username, password})
+    };
 
-    return fetch(`http://localhost:8080/api/v1/user/authenticate`, requestOptions)
+    return fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/user/authenticate`, requestOptions)
         .then(handleResponse)
         .then(res => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            const result = tokenHelper.verifyToken(res.token)
+            const result = tokenHelper.verifyToken(res.token);
 
             tokenHelper.setToken(res.token);
             return result;
@@ -35,16 +35,16 @@ function getById(id) {
         headers: authHeader(),
     };
 
-    return fetch(`http://localhost:8080/api/v1/user/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/user/${id}`, requestOptions).then(handleResponse);
 }
 
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: { ...authHeader(), ...appHeader() }
-    }
+        headers: {...authHeader(), ...appHeader()}
+    };
 
-    return fetch(`http://localhost:8080/api/v1/user`, requestOptions).then(handleResponse);
+    return fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/user`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
