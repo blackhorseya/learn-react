@@ -58,10 +58,6 @@ Application: ${APP_NAME}:${VERSION}
 """
         sh 'printenv'
 
-        container('dotnet-builder') {
-            sh 'dotnet --info'
-        }
-
         container('docker') {
             sh 'docker info'
             sh 'docker version'
@@ -76,74 +72,42 @@ Application: ${APP_NAME}:${VERSION}
 
     stage('Build') {
       steps {
-        container('dotnet-builder') {
+        container('node') {
             sh """
-            dotnet sonarscanner begin /k:\"${APP_NAME}\" \
-            /v:${VERSION} \
-            /d:sonar.host.url=${SONARQUBE_HOST_URL} \
-            /d:sonar.login=${SONARQUBE_TOKEN} \
-            /d:sonar.exclusions=**/*.js,**/*.ts,**/*.css,bin/**/*,obj/**/*,wwwroot/**/*,ClientApp/**/* \
-            /d:sonar.cs.opencover.reportsPaths=${PWD}/coverage/coverage.opencover.xml \
-            /d:sonar.coverage.exclusions=**/Entities/**/*,test/**/* \
-            /d:sonar.cs.vstest.reportsPaths=${PWD}/TestResults/report.trx
+            yarn install
+            yarn build
             """
-            sh 'dotnet build -c Release -o ./publish'
         }
       }
     }
 
-    stage('Test') {
-      steps {
-        container('dotnet-builder') {
-          echo "perform dotnet test and generate test and coverage results"
-          sh '''
-          dotnet test /p:CollectCoverage=true \
-          /p:CoverletOutputFormat=opencover \
-          /p:CoverletOutput=$(pwd)/coverage/ \
-          --logger trx \
-          -r ./TestResults/report.trx \
-          -o ./publish \
-          --no-build --no-restore
-          '''
-        }
-      }
-    }
-
-    stage('Static Code Analysis') {
-      steps {
-        container('dotnet-builder') {
-          sh "dotnet sonarscanner end /d:sonar.login=${SONARQUBE_TOKEN}"
-        }
-      }
-    }
-
-    stage('Build and push docker image') {
-        steps {
-            container('docker') {
-                echo """
-IMAGE_NAME: ${IMAGE_NAME}
-"""
-
-                sh "docker build -t ${IMAGE_NAME}:latest -f Dockerfile --network host ."
-                sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"
-                sh """
-                docker push ${IMAGE_NAME}:latest && \
-                docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${VERSION} && \
-                docker push ${IMAGE_NAME}:${VERSION}
-                """
-                sh "docker images --filter=reference='${IMAGE_NAME}:*'"
-            }
-        }
-    }
-
-    stage('Deploy') {
-      steps {
-          container('helm') {
-              echo "deploy to dev for latest version"
-              sh "helm upgrade --install ${APP_NAME} --namespace=${KUBE_NS} deploy/helm"
-          }
-      }
-    }
+//     stage('Build and push docker image') {
+//         steps {
+//             container('docker') {
+//                 echo """
+// IMAGE_NAME: ${IMAGE_NAME}
+// """
+//
+//                 sh "docker build -t ${IMAGE_NAME}:latest -f Dockerfile --network host ."
+//                 sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"
+//                 sh """
+//                 docker push ${IMAGE_NAME}:latest && \
+//                 docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${VERSION} && \
+//                 docker push ${IMAGE_NAME}:${VERSION}
+//                 """
+//                 sh "docker images --filter=reference='${IMAGE_NAME}:*'"
+//             }
+//         }
+//     }
+//
+//     stage('Deploy') {
+//       steps {
+//           container('helm') {
+//               echo "deploy to dev for latest version"
+//               sh "helm upgrade --install ${APP_NAME} --namespace=${KUBE_NS} deploy/helm"
+//           }
+//       }
+//     }
   }
 
   post {
