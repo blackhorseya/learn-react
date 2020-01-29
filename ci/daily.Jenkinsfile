@@ -45,10 +45,12 @@ spec:
     stage('Prepare') {
       steps {
         container('node') {
-            APP_NAME = sh (
-                script: 'yarn -s get-name',
-                returnStdout: true
-            ).trim()
+            script {
+                APP_NAME = sh (
+                    script: 'yarn -s get-name',
+                    returnStdout: true
+                ).trim()
+            }
         }
         echo """
 Perform ${JOB_NAME} for
