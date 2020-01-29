@@ -104,14 +104,14 @@ IMAGE_NAME: ${IMAGE_NAME}
             }
         }
 
-//     stage('Deploy') {
-//       steps {
-//           container('helm') {
-//               echo "deploy to dev for latest version"
-//               sh "helm upgrade --install ${APP_NAME} --namespace=${KUBE_NS} deploy/helm"
-//           }
-//       }
-//     }
+     stage('Deploy') {
+       steps {
+           container('helm') {
+               echo "deploy to dev for latest version"
+               sh "helm upgrade --install ${APP_NAME} --namespace=${KUBE_NS} deploy/helm"
+           }
+       }
+     }
     }
 
     post {
