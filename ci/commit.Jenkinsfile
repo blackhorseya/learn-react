@@ -19,10 +19,13 @@ spec:
   stages {
     stage('Prepare') {
       steps {
-        echo "branch name: ${env.GIT_BRANCH}"
-        sh 'node -v'
-        sh 'yarn -v'
-        sh 'printenv'
+        container('node') {
+          echo "branch name: ${env.GIT_BRANCH}"
+          sh 'node -v'
+          sh 'yarn -v'
+          sh 'yarn install'
+          sh 'printenv'
+        }
       }
     }
 
