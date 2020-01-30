@@ -94,7 +94,7 @@ IMAGE_NAME: ${IMAGE_NAME}
 """
 
                     sh "docker build -t ${IMAGE_NAME}:latest -f Dockerfile --network host ."
-                    sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"™¡
+                    sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"
                     sh """
                  docker push ${IMAGE_NAME}:latest && \
                  docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${FULL_VERSION} && \
