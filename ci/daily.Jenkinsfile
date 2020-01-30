@@ -93,7 +93,7 @@ Application: ${APP_NAME}:${FULL_VERSION}
 IMAGE_NAME: ${IMAGE_NAME}
 """
 
-                    sh "docker build -t ${IMAGE_NAME}:latest -f Dockerfile --network host ."
+                    sh "docker build -t ${IMAGE_NAME}:latest -f Dockerfile --network host --build-arg NODE_ENV=development ."
                     sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"
                     sh """
                  docker push ${IMAGE_NAME}:latest && \
