@@ -94,7 +94,7 @@ IMAGE_NAME: ${IMAGE_NAME}
 """
 
                     sh "docker build -t ${IMAGE_NAME}:latest -f Dockerfile --network host ."
-                    sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"
+                    sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"™¡
                     sh """
                  docker push ${IMAGE_NAME}:latest && \
                  docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${FULL_VERSION} && \
@@ -109,7 +109,7 @@ IMAGE_NAME: ${IMAGE_NAME}
        steps {
             container('helm') {
                 echo "deploy to dev for latest version"
-                sh "helm upgrade --install ${APP_NAME} --namespace=${KUBE_NS} deploy/helm"
+                sh "helm upgrade --install dev-${APP_NAME} --namespace=${KUBE_NS} deploy/helm -f deploy/config/dev/values.yaml --wait --atomic"
             }
             sshagent(['github-ssh']) {
                 sh """
@@ -124,6 +124,7 @@ IMAGE_NAME: ${IMAGE_NAME}
     post {
         always {
             script {
+                def (x, repo) = "${GIT_URL}".split(':')
                 def prefixIcon = currentBuild.currentResult == 'SUCCESS' ? ':white_check_mark:' : ':x:'
                 def blocks = [
                         [
@@ -153,7 +154,7 @@ IMAGE_NAME: ${IMAGE_NAME}
                                         ],
                                         [
                                                 "type": "mrkdwn",
-                                                "text": "*:star: Project:*\n<${GIT_URL}|Github>"
+                                                "text": "*:star: Project:*\n<https://github.com/${repo}|Github>"
                                         ],
                                         [
                                                 "type": "mrkdwn",
