@@ -50,15 +50,16 @@ spec:
                         VERSION = sh(
                                 script: 'yarn -s get-version',
                                 returnStdout: true
-                        ).trim() + ".${BUILD_ID}"
+                        ).trim()
                         IMAGE_NAME = "${DOCKERHUB_USR}/${APP_NAME}"
+                        FULL_VERSION = "${VERSION}.${BUILD_ID}".trim()
                     }
                 }
                 echo """
 Perform ${JOB_NAME} for
 Repo: ${env.GIT_URL}
 Branch: ${env.GIT_BRANCH}
-Application: ${APP_NAME}:${VERSION}
+Application: ${APP_NAME}:${FULL_VERSION}
 """
                 sh 'printenv'
 
@@ -96,8 +97,8 @@ IMAGE_NAME: ${IMAGE_NAME}
                     sh "docker login --username ${DOCKERHUB_USR} --password ${DOCKERHUB_PSW}"
                     sh """
                  docker push ${IMAGE_NAME}:latest && \
-                 docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${VERSION} && \
-                 docker push ${IMAGE_NAME}:${VERSION}
+                 docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${FULL_VERSION} && \
+                 docker push ${IMAGE_NAME}:${FULL_VERSION}
                  """
                     sh "docker images --filter=reference='${IMAGE_NAME}:*'"
                 }
@@ -106,10 +107,16 @@ IMAGE_NAME: ${IMAGE_NAME}
 
      stage('Deploy') {
        steps {
-           container('helm') {
-               echo "deploy to dev for latest version"
-               sh "helm upgrade --install ${APP_NAME} --namespace=${KUBE_NS} deploy/helm"
-           }
+            container('helm') {
+                echo "deploy to dev for latest version"
+                sh "helm upgrade --install ${APP_NAME} --namespace=${KUBE_NS} deploy/helm"
+            }
+            sshagent(['github-ssh']) {
+                sh """
+                git tag --delete v${VERSION}-alpha | exit 0 && git push --delete origin v${VERSION}-alpha | exit 0
+                git tag v${VERSION}-alpha && git push --tags
+                """
+            }
        }
      }
     }
@@ -123,7 +130,7 @@ IMAGE_NAME: ${IMAGE_NAME}
                                 "type": "section",
                                 "text": [
                                         "type": "mrkdwn",
-                                        "text": "${prefixIcon} *<${BUILD_URL}|${JOB_NAME} #${VERSION}>*"
+                                        "text": "${prefixIcon} *<${BUILD_URL}|${JOB_NAME} #${FULL_VERSION}>*"
                                 ]
                         ],
                         [
