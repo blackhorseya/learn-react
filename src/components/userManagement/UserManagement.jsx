@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {userActions} from '../../_actions';
-import {Table, Anchor} from '../_shared';
+import {TableTemplate, Anchor} from '../_shared';
 
 class UserManagement extends React.Component {
     constructor(props) {
@@ -10,22 +10,15 @@ class UserManagement extends React.Component {
         this.state = {
             columns: [
                 {
-                    sortable: true,
                     title: 'Name',
-                    key: 'name',
-                    render: (value, row) => {
-                        return (<Anchor>{row.name}</Anchor>);
-                    }
+                    dataKey: 'name',
+                    width: '20%',
                 },
                 {
-                    sortable: true,
-                    dataIndex: 'roles',
                     title: 'Roles',
-                    key: 'roles',
+                    dataKey: 'roles',
                     render: (value, row) => {
-                        if (!Array.isArray(row.roles))
-                            return row.roles;
-                        return (row.roles.map(role => role.name).join(','));
+                        return (value.map(role => role.name).join(','));
                     }
                 },
             ]
@@ -43,14 +36,13 @@ class UserManagement extends React.Component {
         return (
             <div>
                 <h1 className="text-primary">User Management</h1>
-                <Table
-                    bordered
+                <TableTemplate
                     hoverable
+                    width={800}
                     loading={users.loading}
-                    rowKey={record => record.id}
                     columns={columns}
                     data={users.items}
-                    emptyText={() => users.error && <span className="text-danger">ERROR: {users.error}</span>}
+                    emptyRender={() => users.error && <span className="text-danger">ERROR: {users.error}</span>}
                 />
             </div>
         );
