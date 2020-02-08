@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { userActions } from '../../_actions';
-import { Table, Anchor } from '../_shared';
+import {connect} from 'react-redux';
+import {userActions} from '../../_actions';
+import {Table, Anchor} from '../_shared';
 
 class UserManagement extends React.Component {
     constructor(props) {
@@ -37,8 +37,8 @@ class UserManagement extends React.Component {
     }
 
     render() {
-        const { users } = this.props;
-        const { columns } = this.state;
+        const {users} = this.props;
+        const {columns} = this.state;
 
         return (
             <div>
@@ -58,14 +58,14 @@ class UserManagement extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { users, authentication } = state;
-    const { user } = authentication;
-    return { user, users };
+    const {users, authentication} = state;
+    const {user} = authentication;
+    return {user, users};
 }
 
 const actionCreators = {
     getUsers: userActions.getAll,
-}
+};
 
 const connectedUserManagement = connect(mapStateToProps, actionCreators)(UserManagement);
-export { connectedUserManagement as UserManagement };
+export {connectedUserManagement as UserManagement};

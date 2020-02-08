@@ -7,7 +7,7 @@ export const userActions = {
     logout,
     getById,
     getAll,
-}
+};
 
 function login(username, password) {
     return dispatch => {

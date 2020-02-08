@@ -10,7 +10,7 @@ class Menu extends React.Component {
         this.state = {
             selected: this.props.location.pathname.substr(1),
             expanded: false,
-        }
+        };
 
         this.onSelect = this.onSelect.bind(this);
         this.onToggle = this.onToggle.bind(this);
@@ -76,7 +76,7 @@ function mapStateToProps(state) {
 
 const actionCreators = {
 
-}
+};
 
 const connectedMenu = connect(mapStateToProps, actionCreators)(Menu);
 export { connectedMenu as Menu };

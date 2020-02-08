@@ -48,7 +48,7 @@ function mapStateToProps(state) {
 
 const actionCreators = {
     getUsers: userActions.getById,
-}
+};
 
 const connectedDashboard = connect(mapStateToProps, actionCreators)(Dashboard);
 export { connectedDashboard as Dashboard };

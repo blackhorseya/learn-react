@@ -9,7 +9,7 @@ export const PrivateRoute = ({ component: Component, roles, ...rest }) => (
 
         var containRoles = function (ele) {
             return user.role.includes(ele);
-        }
+        };
 
         if (!token) {
             return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
@@ -21,4 +21,4 @@ export const PrivateRoute = ({ component: Component, roles, ...rest }) => (
 
         return <Component {...props} />
     }} />
-)
+);

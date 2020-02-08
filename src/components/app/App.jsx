@@ -26,7 +26,7 @@ class App extends React.Component {
   }
 
   render() {
-    const title = "Learn React"
+    const title = "Learn React";
 
     return (
       <div>
@@ -67,7 +67,7 @@ function mapStateToProps(state) {
 
 const actionCreators = {
 
-}
+};
 
 const connectedApp = connect(mapStateToProps, actionCreators)(App);
 export { connectedApp as App };

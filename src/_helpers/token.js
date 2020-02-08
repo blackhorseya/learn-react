@@ -6,7 +6,7 @@ export const tokenHelper = {
     setToken,
     removeToken,
     verifyToken,
-}
+};
 
 function getToken() {
     return Cookies.get('__session');

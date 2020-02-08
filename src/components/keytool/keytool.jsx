@@ -21,7 +21,7 @@ class Keytool extends React.Component {
             startTime: moment(now).format('hh:mm:ss'),
             endDate: moment(now).add(7, 'days').format('YYYY-MM-DD'),
             endTime: moment(now).add(7, 'days').format('hh:mm:ss')
-        }
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -147,7 +147,7 @@ function mapStateToProps(state) {
 
 const actionCreators = {
 
-}
+};
 
 const connectedKeyTool = connect(mapStateToProps, actionCreators)(Keytool);
 export { connectedKeyTool as Keytool };

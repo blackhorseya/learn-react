@@ -103,6 +103,6 @@ const uncontrollableDateTimeRangePicker = uncontrollable(DateTimeRangePicker, {
     startTime: 'onChangeStartTime',
     endDate: 'onChangeEndDate',
     endTime: 'onChangeEndTime'
-})
+});
 
 export { uncontrollableDateTimeRangePicker as DateTimeRangePicker };
