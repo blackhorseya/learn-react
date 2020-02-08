@@ -23,7 +23,9 @@ class UserManagement extends React.Component {
                     title: 'Roles',
                     key: 'roles',
                     render: (value, row) => {
-                        return (row.roles.join(','))
+                        if (!Array.isArray(row.roles))
+                            return row.roles;
+                        return (row.roles.map(role => role.name).join(','));
                     }
                 },
             ]

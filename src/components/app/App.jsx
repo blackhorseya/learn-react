@@ -26,7 +26,7 @@ class App extends React.Component {
   }
 
   render() {
-    const title = "PLS Self Service"
+    const title = "Learn React"
 
     return (
       <div>
