@@ -60,7 +60,12 @@ const ExpandIcon = styled.div`
 
 const subColumns = [
     {title: 'Role Name', dataKey: 'name'},
-    {title: 'Services', dataKey: 'services', render: (value, row) => value.join(',')},
+    {
+        title: 'Services', dataKey: 'services', render: (value, row) => {
+            if (Array.isArray(value))
+                return (value.join(','))
+        }
+    },
     {title: 'Modules', dataKey: 'modules', render: (value, row) => value.join(',')},
 ];
 
@@ -128,7 +133,10 @@ class UserManagement extends React.Component {
                 title: 'Roles',
                 dataKey: 'roles',
                 render: (value, row) => {
-                    return (value.map(role => role.name).join(','));
+                    if (Array.isArray(value))
+                        return (value.map(role => role.name).join(','));
+                    else
+                        return (value)
                 }
             },
             {
