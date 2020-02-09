@@ -109,7 +109,7 @@ IMAGE_NAME: ${IMAGE_NAME}
        steps {
             container('helm') {
                 echo "deploy to dev for latest version"
-                sh "helm upgrade --install dev-${APP_NAME} --namespace=${KUBE_NS} deploy/helm -f deploy/config/dev/values.yaml --wait --atomic"
+                sh "helm upgrade --install dev-${APP_NAME} --namespace=${KUBE_NS} deploy/helm -f deploy/config/dev/values.yaml --set image.tag=${FULL_VERSION} --wait --atomic"
             }
             sshagent(['github-ssh']) {
                 sh """
