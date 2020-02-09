@@ -18,7 +18,7 @@ function login(username, password) {
         .then(handleResponse)
         .then(res => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            const result = tokenHelper.verifyToken(res.token);
+            const result = tokenHelper.decode(res.token);
 
             tokenHelper.setToken(res.token);
             return result;
