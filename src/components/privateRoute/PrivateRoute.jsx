@@ -7,7 +7,7 @@ export const PrivateRoute = ({ component: Component, roles, ...rest }) => (
         let token = tokenHelper.getToken();
         let user = token ? tokenHelper.decode(token) : null;
 
-        var containRoles = function (ele) {
+        const containRoles = function (ele) {
             return user.role.includes(ele);
         };
 
