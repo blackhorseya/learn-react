@@ -24,7 +24,7 @@ export function authentication(state = initialState, action) {
             return {};
         default:
             if (token) {
-                state.user = jwt.verify(token, '1234567890abcdef');
+                state.user = jwt.decode(token);
             }
             return state
     }

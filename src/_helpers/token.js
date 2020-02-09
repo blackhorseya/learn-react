@@ -5,7 +5,7 @@ export const tokenHelper = {
     getToken,
     setToken,
     removeToken,
-    verifyToken,
+    decode,
 };
 
 function getToken() {
@@ -20,6 +20,6 @@ function removeToken() {
     Cookies.remove('__session');
 }
 
-function verifyToken(token) {
-    return jwt.verify(token, '1234567890abcdef');
+function decode(token) {
+    return jwt.decode(token);
 }

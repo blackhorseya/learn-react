@@ -5,13 +5,14 @@ import { tokenHelper } from "../../_helpers";
 export const PrivateRoute = ({ component: Component, roles, ...rest }) => (
     <Route {...rest} render={props => {
         let token = tokenHelper.getToken();
-        let user = token ? tokenHelper.verifyToken(token) : null;
+        let user = token ? tokenHelper.decode(token) : null;
 
         var containRoles = function (ele) {
             return user.role.includes(ele);
         };
 
         if (!token) {
+            tokenHelper.removeToken();
             return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
         }
 
