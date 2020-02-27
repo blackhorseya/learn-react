@@ -6,7 +6,7 @@ pipeline {
         KUBE_NS = "default"
         DOCKERHUB = credentials('docker-hub-credential')
         SONARQUBE_TOKEN = credentials('sonarqube-token')
-        SONARQUBE_HOST_URL = "https://sonar.blackhorseya.space"
+        SONARQUBE_HOST_URL = "https://sonar.blackhorseya.com"
         KUBE_CONFIG_FILE = credentials('kube-config')
     }
     agent {
