@@ -2,7 +2,7 @@
 
 @Library("jenkins-shared-libraries") _
 
-dotnetDaily {
+reactDaily {
   [
     AppName = "learn-react",
     Version = "1.0.0",
