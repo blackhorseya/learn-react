@@ -51,8 +51,6 @@ pipeline {
     }
     environment {
         // application settings
-        APP_NAME = "learn-dotnet"
-        VERSION = "1.0.1"
         FULL_VERSION = "${VERSION}.${BUILD_ID}"
         IMAGE_NAME = "${DOCKER_REGISTRY_CRED_USR}/${APP_NAME}"
 
@@ -126,11 +124,11 @@ spec:
 
                 container('builder') {
                     script {
-                        env.APP_NAME = sh(
+                        APP_NAME = sh(
                                 script: 'yarn -s get-name',
                                 returnStdout: true
                         ).trim()
-                        env.VERSION = sh(
+                        VERSION = sh(
                                 script: 'yarn -s get-version',
                                 returnStdout: true
                         ).trim()
