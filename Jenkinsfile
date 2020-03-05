@@ -84,7 +84,7 @@ spec:
     tty: true
     volumeMounts:
     - name: yarncache
-      mountPath: /usr/local/share/yarn
+      mountPath: /usr/local/share/.cache/yarn
   - name: docker
     image: docker:latest
     command: ['cat']
@@ -102,7 +102,7 @@ spec:
       path: /var/run/docker.sock
   - name: yarncache
     hostPath:
-      path: /usr/local/share/yarn
+      path: /usr/local/share/.cache/yarn
 """
         }
     }
