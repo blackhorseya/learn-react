@@ -51,6 +51,8 @@ pipeline {
     }
     environment {
         // application settings
+        AppName = "learn-react",
+        Version = "1.0.0",
         FULL_VERSION = "${VERSION}.${BUILD_ID}"
         IMAGE_NAME = "${DOCKER_REGISTRY_CRED_USR}/${APP_NAME}"
 
