@@ -50,12 +50,6 @@ pipeline {
         cron('H H(20-21) * * *')
     }
     environment {
-        // application settings
-        AppName = "learn-react",
-        Version = "1.0.0",
-        FULL_VERSION = "${VERSION}.${BUILD_ID}"
-        IMAGE_NAME = "${DOCKER_REGISTRY_CRED_USR}/${APP_NAME}"
-
         // docker credentials
         DOCKER_REGISTRY_URL = "https://registry.hub.docker.com/"
         DOCKER_REGISTRY_ID = "docker-hub-credential"
@@ -126,14 +120,16 @@ spec:
 
                 container('builder') {
                     script {
-                        APP_NAME = sh(
+                        env.APP_NAME = sh(label: "get app name",
                                 script: 'yarn -s get-name',
                                 returnStdout: true
                         ).trim()
-                        VERSION = sh(
+                        env.VERSION = sh(label: "get app version",
                                 script: 'yarn -s get-version',
                                 returnStdout: true
                         ).trim()
+                        env.FULL_VERSION = "${VERSION}.${BUILD_ID}"
+                        env.IMAGE_NAME = "${DOCKER_REGISTRY_CRED_USR}/${APP_NAME}"
                     }
                 }
                 
